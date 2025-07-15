@@ -1,0 +1,398 @@
+{
+  "summary": {
+    "total_checks": 63,
+    "passed": 57,
+    "failed": 6,
+    "warnings": 0,
+    "success_rate": 90.47619047619048
+  },
+  "checks": [
+    {
+      "name": "File: pyproject.toml",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "File: README.md",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "File: .env.example",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "File: .gitignore",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "File: docker-compose.yml",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "File: docker/Dockerfile",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "File: docker/deploy.sh",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "File: run_tests.py",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "File: pytest.ini",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Directory: trend_graph",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Directory: trend_graph/nodes",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Directory: backend",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Directory: tests",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Directory: tests/unit",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Directory: tests/integration",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Directory: docker",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Import: trend_graph.state",
+      "status": true,
+      "message": "Core state management",
+      "warning": false
+    },
+    {
+      "name": "Import: trend_graph.config",
+      "status": false,
+      "message": "Import error: No module named 'dotenv'",
+      "warning": false
+    },
+    {
+      "name": "Import: trend_graph.database",
+      "status": false,
+      "message": "Import error: No module named 'tortoise'",
+      "warning": false
+    },
+    {
+      "name": "Import: trend_graph.graph",
+      "status": false,
+      "message": "Import error: No module named 'langgraph'",
+      "warning": false
+    },
+    {
+      "name": "Import: backend.app",
+      "status": false,
+      "message": "Import error: attempted relative import beyond top-level package",
+      "warning": false
+    },
+    {
+      "name": "Import: backend.scheduler",
+      "status": false,
+      "message": "Import error: attempted relative import beyond top-level package",
+      "warning": false
+    },
+    {
+      "name": "Import: backend.monitoring",
+      "status": false,
+      "message": "Import error: attempted relative import beyond top-level package",
+      "warning": false
+    },
+    {
+      "name": "Env var: REDDIT_CLIENT_ID",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Env var: REDDIT_SECRET",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Env var: TWITTER_API_KEY",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Env var: TWITTER_API_SECRET",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Env var: OPENAI_API_KEY",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Dependency: fastapi",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Dependency: langgraph",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Dependency: praw",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Dependency: tweepy",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Dependency: openai",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Dependency: tortoise-orm",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Dependency: apscheduler",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Dockerfile: FROM",
+      "status": true,
+      "message": "Base image specified",
+      "warning": false
+    },
+    {
+      "name": "Dockerfile: WORKDIR",
+      "status": true,
+      "message": "Working directory set",
+      "warning": false
+    },
+    {
+      "name": "Dockerfile: COPY",
+      "status": true,
+      "message": "Files copied",
+      "warning": false
+    },
+    {
+      "name": "Dockerfile: EXPOSE",
+      "status": true,
+      "message": "Port exposed",
+      "warning": false
+    },
+    {
+      "name": "Dockerfile: CMD",
+      "status": true,
+      "message": "Command specified",
+      "warning": false
+    },
+    {
+      "name": "Docker Compose: Service defined",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Docker Compose: Ports mapped",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Pytest: Test paths configured",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Pytest: Async mode configured",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Test file: tests/conftest.py",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Test file: tests/unit/test_state.py",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Test file: tests/unit/test_scoring.py",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Test file: tests/integration/test_workflow.py",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Script: run_tests.py",
+      "status": true,
+      "message": "Executable",
+      "warning": false
+    },
+    {
+      "name": "Script: docker/deploy.sh",
+      "status": true,
+      "message": "Executable",
+      "warning": false
+    },
+    {
+      "name": "Script: docker/update.sh",
+      "status": true,
+      "message": "Executable",
+      "warning": false
+    },
+    {
+      "name": "Script: docker/entrypoint.sh",
+      "status": true,
+      "message": "Executable",
+      "warning": false
+    },
+    {
+      "name": "README: Features section",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "README: Architecture section",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "README: Prerequisites section",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "README: Quick Start section",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "README: API Documentation section",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "README: Configuration section",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "README: Testing section",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "README: Monitoring section",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "README: Docker Deployment section",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "README: Troubleshooting section",
+      "status": true,
+      "message": "",
+      "warning": false
+    },
+    {
+      "name": "Python syntax",
+      "status": true,
+      "message": "Checked 23 files",
+      "warning": false
+    }
+  ],
+  "errors": [
+    "Import: trend_graph.config: Import error: No module named 'dotenv'",
+    "Import: trend_graph.database: Import error: No module named 'tortoise'",
+    "Import: trend_graph.graph: Import error: No module named 'langgraph'",
+    "Import: backend.app: Import error: attempted relative import beyond top-level package",
+    "Import: backend.scheduler: Import error: attempted relative import beyond top-level package",
+    "Import: backend.monitoring: Import error: attempted relative import beyond top-level package"
+  ],
+  "warnings": []
+}

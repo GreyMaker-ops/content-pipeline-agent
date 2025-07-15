@@ -1,0 +1,118 @@
+version: '3.9'
+
+services:
+  trend-agent:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: social-trend-agent
+    restart: unless-stopped
+    ports:
+      - "8000:8000"  # API port
+      - "8001:8001"  # Metrics port
+    environment:
+      # Reddit API Configuration
+      - REDDIT_CLIENT_ID=${REDDIT_CLIENT_ID}
+      - REDDIT_SECRET=${REDDIT_SECRET}
+      - REDDIT_USER_AGENT=${REDDIT_USER_AGENT:-TrendBot/1.0}
+      
+      # Twitter API Configuration
+      - TWITTER_BEARER_TOKEN=${TWITTER_BEARER_TOKEN}
+      - TWITTER_API_KEY=${TWITTER_API_KEY}
+      - TWITTER_API_SECRET=${TWITTER_API_SECRET}
+      - TWITTER_ACCESS_TOKEN=${TWITTER_ACCESS_TOKEN}
+      - TWITTER_ACCESS_TOKEN_SECRET=${TWITTER_ACCESS_TOKEN_SECRET}
+      
+      # OpenAI Configuration
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GPT_MODEL=${GPT_MODEL:-gpt-4o}
+      
+      # Stagehand Configuration (optional)
+      - STAGEHAND_API_KEY=${STAGEHAND_API_KEY:-}
+      - BROWSERBASE_API_KEY=${BROWSERBASE_API_KEY:-}
+      - BROWSERBASE_PROJECT_ID=${BROWSERBASE_PROJECT_ID:-}
+      
+      # Application Configuration
+      - MIN_SCORE=${MIN_SCORE:-200}
+      - SUBREDDITS=${SUBREDDITS:-interestingasfuck,technology,pics}
+      - INTERVAL_MINUTES=${INTERVAL_MINUTES:-5}
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DEBUG=${DEBUG:-false}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - LOG_FORMAT=${LOG_FORMAT:-json}
+      
+      # Database Configuration
+      - DATABASE_URL=sqlite:///app/data/trend_agent.db
+      
+      # Prometheus Configuration
+      - PROMETHEUS_PORT=8001
+    volumes:
+      - trend_data:/app/data
+      - trend_logs:/app/logs
+      - trend_media:/app/media
+      - ./.env:/app/.env:ro  # Mount environment file
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      - prometheus
+    networks:
+      - trend-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: trend-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - trend-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: trend-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./docker/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./docker/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    depends_on:
+      - prometheus
+    networks:
+      - trend-network
+
+volumes:
+  trend_data:
+    driver: local
+  trend_logs:
+    driver: local
+  trend_media:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+networks:
+  trend-network:
+    driver: bridge
+

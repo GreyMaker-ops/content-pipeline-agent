@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  trend-agent-dev:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: social-trend-agent-dev
+    restart: "no"  # Don't restart automatically in dev
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    environment:
+      # Load from .env file
+      - REDDIT_CLIENT_ID=${REDDIT_CLIENT_ID}
+      - REDDIT_SECRET=${REDDIT_SECRET}
+      - REDDIT_USER_AGENT=${REDDIT_USER_AGENT:-TrendBot/1.0-dev}
+      - TWITTER_BEARER_TOKEN=${TWITTER_BEARER_TOKEN}
+      - TWITTER_API_KEY=${TWITTER_API_KEY}
+      - TWITTER_API_SECRET=${TWITTER_API_SECRET}
+      - TWITTER_ACCESS_TOKEN=${TWITTER_ACCESS_TOKEN}
+      - TWITTER_ACCESS_TOKEN_SECRET=${TWITTER_ACCESS_TOKEN_SECRET}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GPT_MODEL=${GPT_MODEL:-gpt-4o}
+      - STAGEHAND_API_KEY=${STAGEHAND_API_KEY:-}
+      - BROWSERBASE_API_KEY=${BROWSERBASE_API_KEY:-}
+      - BROWSERBASE_PROJECT_ID=${BROWSERBASE_PROJECT_ID:-}
+      - MIN_SCORE=${MIN_SCORE:-50}  # Lower threshold for dev
+      - SUBREDDITS=${SUBREDDITS:-technology,programming}  # Smaller set for dev
+      - INTERVAL_MINUTES=${INTERVAL_MINUTES:-10}  # Longer interval for dev
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DEBUG=true  # Enable debug mode
+      - LOG_LEVEL=DEBUG
+      - LOG_FORMAT=text  # Easier to read in dev
+      - DATABASE_URL=sqlite:///app/data/trend_agent_dev.db
+      - PROMETHEUS_PORT=8001
+    volumes:
+      - ./:/app  # Mount source code for live reloading
+      - dev_data:/app/data
+      - dev_logs:/app/logs
+      - dev_media:/app/media
+    command: >
+      sh -c "
+        pip install watchdog &&
+        python -m uvicorn backend.app:app 
+        --host 0.0.0.0 
+        --port 8000 
+        --reload 
+        --reload-dir /app
+      "
+    networks:
+      - trend-dev-network
+
+volumes:
+  dev_data:
+    driver: local
+  dev_logs:
+    driver: local
+  dev_media:
+    driver: local
+
+networks:
+  trend-dev-network:
+    driver: bridge
+
