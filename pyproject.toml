@@ -1,0 +1,144 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "social-trend-agent"
+version = "1.0.0"
+description = "AI-powered social trend analysis and Twitter automation"
+authors = ["Social Trend Agent Team"]
+readme = "README.md"
+packages = [{include = "trend_graph"}, {include = "backend"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+# Core dependencies
+fastapi = "^0.104.0"
+uvicorn = "^0.24.0"
+# LangGraph for workflow orchestration
+langgraph = "^0.0.40"
+langchain = "^0.0.350"
+# Reddit API
+praw = "^7.7.1"
+# Twitter API
+tweepy = "^4.14.0"
+# OpenAI API
+openai = "^1.3.0"
+# Web scraping with Stagehand
+stagehand-py = "^0.4.0"
+# Database ORM
+tortoise-orm = "^0.20.0"
+# Scheduling
+apscheduler = "^3.10.4"
+# HTTP requests
+requests = "^2.31.0"
+httpx = "^0.25.0"
+# Data processing
+pandas = "^2.1.0"
+numpy = "^1.25.0"
+# Configuration
+pydantic = "^2.5.0"
+pydantic-settings = "^2.1.0"
+python-dotenv = "^1.0.0"
+# Logging
+structlog = "^23.2.0"
+# System monitoring
+psutil = "^5.9.0"
+# Async support
+asyncio = "^3.4.3"
+# Prometheus metrics
+prometheus-client = "^0.19.0"
+# CORS support
+fastapi-cors = "^0.0.6"
+
+[tool.poetry.group.dev.dependencies]
+# Testing
+pytest = "^7.4.0"
+pytest-asyncio = "^0.21.0"
+pytest-cov = "^4.1.0"
+pytest-timeout = "^2.1.0"
+pytest-mock = "^3.11.0"
+# Code quality
+black = "^23.11.0"
+isort = "^5.12.0"
+flake8 = "^6.1.0"
+mypy = "^1.7.0"
+bandit = "^1.7.5"
+# Development tools
+ipython = "^8.17.0"
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["trend_graph", "backend"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "praw.*",
+    "tweepy.*",
+    "stagehand.*",
+    "tortoise.*",
+    "apscheduler.*",
+    "prometheus_client.*"
+]
+ignore_missing_imports = true
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+skips = ["B101", "B601"]
+
+[tool.coverage.run]
+source = ["trend_graph", "backend"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+    "*/migrations/*"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:"
+]
+
